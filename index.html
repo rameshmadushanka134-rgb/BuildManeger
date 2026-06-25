@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title" data-en="Build Manager - Cost Tracker" data-si="බිල්ඩ් මැනේජර් - ඉදිකිරීම් වියදම් ලේඛනය">Build Manager - Cost Tracker</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Sinhala:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css?v=6.0">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar / Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-building-columns"></i>
+                </div>
+                <div class="brand-info">
+                    <h2 data-en="Build Manager" data-si="බිල්ඩ් මැනේජර්">Build Manager</h2>
+                    <p data-en="Construction Cost Tracker" data-si="ඉදිකිරීම් වියදම් ලේඛනය">Construction Cost Tracker</p>
+                </div>
+            </div>
+            
+            <!-- Project Selection Workspace -->
+            <div class="project-selector-container" style="padding: 16px; border-bottom: 1px solid rgba(255,255,255,0.08);">
+                <label data-en="Active Project" data-si="සක්‍රීය ව්‍යාපෘතිය" style="color: var(--text-sidebar-muted); font-size: 11px; text-transform: uppercase; margin-bottom: 6px; display: block;">Active Project</label>
+                <div style="display: flex; gap: 8px; align-items: center;">
+                    <select id="project-select" style="flex: 1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 6px 10px; font-size: 13px; border-radius: var(--border-radius-sm); cursor: pointer; outline: none;">
+                        <!-- Loaded dynamically -->
+                    </select>
+                    <button type="button" id="btn-manage-projects" title="Manage Projects" style="background: var(--accent-color); border: none; border-radius: var(--border-radius-sm); width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #1e293b; transition: var(--transition-fast);">
+                        <i class="fa-solid fa-folder-gear"></i>
+                    </button>
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="#dashboard" class="nav-item active" data-tab="dashboard">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span data-en="Dashboard" data-si="දළ විශ්ලේෂණය">Dashboard</span>
+                </a>
+                <a href="#expenses" class="nav-item" data-tab="expenses">
+                    <i class="fa-solid fa-receipt"></i>
+                    <span data-en="Expenses" data-si="වියදම් ලේඛනය">Expenses</span>
+                </a>
+                <a href="#payments" class="nav-item" data-tab="payments">
+                    <i class="fa-solid fa-money-bill-transfer"></i>
+                    <span data-en="Payments Ledger" data-si="ගෙවීම් සහ අත්තිකාරම්">Payments Ledger</span>
+                </a>
+                <a href="#drawings" class="nav-item" data-tab="drawings">
+                    <i class="fa-solid fa-map-location-dot"></i>
+                    <span data-en="Drawings & Progress" data-si="සැලසුම් සහ ඉදිකිරීම් ප්‍රගතිය">Drawings & Progress</span>
+                </a>
+                <a href="#reports" class="nav-item" data-tab="reports">
+                    <i class="fa-solid fa-file-invoice-dollar"></i>
+                    <span data-en="Reports & Backup" data-si="වාර්තා සහ උපස්ථ">Reports & Backup</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="lang-switch-container">
+                    <button id="btn-lang-en" class="lang-btn active">EN</button>
+                    <button id="btn-lang-si" class="lang-btn">සිංහල</button>
+                </div>
+                <div class="theme-switch-container">
+                    <button id="btn-theme-toggle" class="theme-btn" title="Toggle Dark/Light Mode">
+                        <i class="fa-solid fa-moon"></i>
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Top Navigation / Header -->
+            <header class="content-header">
+                <div class="header-left-side" style="display: flex; align-items: center;">
+                    <button id="btn-sidebar-toggle" class="sidebar-toggle-btn" title="Toggle Navigation">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div class="header-title">
+                        <h1 id="tab-title-text" data-en="Dashboard Overview" data-si="ප්‍රධාන දළ විශ්ලේෂණය">Dashboard Overview</h1>
+                        <p id="tab-subtitle-text" data-en="Real-time construction financial analytics" data-si="තථ්‍ය කාලීන ඉදිකිරීම් මූල්‍ය විශ්ලේෂණය">Real-time construction financial analytics</p>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-primary" id="btn-quick-expense">
+                        <i class="fa-solid fa-plus"></i>
+                        <span data-en="Add Expense" data-si="වියදමක් එක් කරන්න">Add Expense</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Dashboard Tab Content -->
+            <section id="tab-dashboard" class="tab-content active">
+                <!-- Summary Metrics Grid -->
+                <div class="metrics-grid">
+                    <div class="metric-card spent">
+                        <div class="metric-icon">
+                            <i class="fa-solid fa-hand-holding-dollar"></i>
+                        </div>
+                        <div class="metric-info">
+                            <span class="metric-label" data-en="Total Expenses" data-si="මුළු වියදම">Total Expenses</span>
+                            <h3 class="metric-value" id="val-total-expenses">Rs. 0.00</h3>
+                        </div>
+                    </div>
+                    <div class="metric-card paid">
+                        <div class="metric-icon">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                        <div class="metric-info">
+                            <span class="metric-label" data-en="Total Paid" data-si="ගෙවා ඇති මුළු මුදල">Total Paid</span>
+                            <h3 class="metric-value" id="val-total-paid">Rs. 0.00</h3>
+                        </div>
+                    </div>
+                    <div class="metric-card outstanding">
+                        <div class="metric-icon">
+                            <i class="fa-solid fa-hourglass-half"></i>
+                        </div>
+                        <div class="metric-info">
+                            <span class="metric-label" data-en="Outstanding Balance" data-si="ගෙවීමට ඇති ඉතිරිය">Outstanding Balance</span>
+                            <h3 class="metric-value" id="val-outstanding">Rs. 0.00</h3>
+                        </div>
+                    </div>
+                    <div class="metric-card budget">
+                        <div class="metric-icon">
+                            <i class="fa-solid fa-bullseye"></i>
+                        </div>
+                        <div class="metric-info">
+                            <span class="metric-label" data-en="Total Budget" data-si="මුළු ඇස්තමේන්තුව">Total Budget</span>
+                            <h3 class="metric-value" style="cursor: pointer; display: flex; align-items: center; gap: 8px; justify-content: center;" id="btn-manage-budget" title="Click to manage budget">
+                                <span id="val-total-budget">Rs. 3,000,000.00</span>
+                                <i class="fa-solid fa-pen-to-square" style="font-size: 14px; opacity: 0.7;"></i>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Budget Progress -->
+                <div class="card budget-progress-card">
+                    <div class="progress-info">
+                        <span data-en="Budget Consumption Progress" data-si="ඇස්තමේන්තුගත මුදල පරිභෝජනය කිරීමේ ප්‍රගතිය">Budget Consumption Progress</span>
+                        <span id="budget-progress-percentage">0%</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div id="budget-progress-bar" class="progress-bar" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <!-- Dashboard Middle Section (Map + Notepad) -->
+                <div class="dashboard-middle-grid" style="display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; margin-bottom: 24px; align-items: stretch;">
+                    <!-- Interactive Visual Cost Map (Dakka Gaman Therum Ganna Map) -->
+                    <div class="card visual-map-card" style="margin-bottom: 0;">
+                        <h3 data-en="Interactive Visual Cost Map" data-si="ක්‍රියාකාරී දෘශ්‍ය ඉදිකිරීම් සැලැස්ම">Interactive Visual Cost Map</h3>
+                        <p class="map-helper-text" data-en="Visual cost allocation of your project sections. Click any section to filter records." data-si="පවතින ව්‍යාපෘතියේ එක් එක් කොටස් වල දෘශ්‍ය වියදම් බෙදී යාම. පෙරීමට කොටස මත ක්ලික් කරන්න.">Visual cost allocation of your project sections. Click any section to filter records.</p>
+                        
+                        <div class="site-map-container" id="visual-map-container">
+                            <!-- Populated dynamically via Javascript based on project type -->
+                        </div>
+                    </div>
+
+                    <!-- Project Notebook / Notepad -->
+                    <div class="card notepad-card" style="display: flex; flex-direction: column; height: 100%;">
+                        <h3 style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                            <i class="fa-solid fa-note-sticky" style="color: var(--accent-color);"></i>
+                            <span data-en="Project Notebook" data-si="ව්‍යාපෘති සටහන් පොත">Project Notebook</span>
+                        </h3>
+                        <p class="map-helper-text" data-en="Save measurements, materials, or contacts for this project. Auto-saves on change." data-si="ව්‍යාපෘතියේ මිනුම්, අමුද්‍රව්‍ය හෝ සම්බන්ධතා සටහන් කරන්න. වෙනස් කළ සැණින් සුරැකේ.">Save measurements, materials, or contacts for this project. Auto-saves on change.</p>
+                        <textarea id="project-notepad-textarea" style="width: 100%; flex: 1; min-height: 180px; resize: none; border: 1px solid var(--border-color); background-color: var(--bg-primary); color: var(--text-primary); border-radius: var(--border-radius-sm); padding: 14px; font-family: inherit; font-size: 14px; margin-bottom: 12px; outline: none; transition: border-color 0.2s;" placeholder="Type notes here... / ඔබේ සටහන් මෙහි ලියන්න..." data-en-placeholder="Type notes here..." data-si-placeholder="ඔබේ සටහන් මෙහි ලියන්න..."></textarea>
+                        <div class="notepad-footer" style="display: flex; justify-content: space-between; align-items: center;">
+                            <span id="notepad-status" data-en="Saved" data-si="සුරකින ලදී" style="font-size: 12px; color: var(--text-secondary); transition: opacity 0.3s;">Saved</span>
+                            <button type="button" id="btn-save-notes" class="btn btn-sm btn-primary">
+                                <i class="fa-solid fa-floppy-disk"></i>
+                                <span data-en="Save Notes" data-si="සුරකින්න">Save Notes</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shop Breakdown & Charts Section -->
+                <div class="dashboard-charts-grid">
+                    <!-- Shop-wise breakdown card -->
+                    <div class="card shop-breakdown-card">
+                        <h3 id="breakdown-card-title" data-en="Shop Cost Breakdown" data-si="කඩ කාමර අනුව වියදම් බෙදීයාම">Shop Cost Breakdown</h3>
+                        <div class="shop-list" id="project-sections-breakdown-list">
+                            <div class="shop-item">
+                                <div class="shop-details">
+                                    <h4 data-en="Shop 1 (Direct + Shared)" data-si="කඩ කාමරය 1 (සෘජු + පොදු)">Shop 1 (Direct + Shared)</h4>
+                                    <span id="shop1-total-val" class="shop-cost">Rs. 0.00</span>
+                                </div>
+                                <div class="shop-sub-info">
+                                    <span data-en="Direct:" data-si="සෘජු:">Direct:</span> <strong id="shop1-direct-val">Rs. 0.00</strong> | 
+                                    <span data-en="50% Shared:" data-si="50% පොදු:">50% Shared:</span> <strong id="shop1-shared-val">Rs. 0.00</strong>
+                                </div>
+                            </div>
+                            <div class="shop-item">
+                                <div class="shop-details">
+                                    <h4 data-en="Shop 2 (Direct + Shared)" data-si="කඩ කාමරය 2 (සෘජු + පොදු)">Shop 2 (Direct + Shared)</h4>
+                                    <span id="shop2-total-val" class="shop-cost">Rs. 0.00</span>
+                                </div>
+                                <div class="shop-sub-info">
+                                    <span data-en="Direct:" data-si="සෘජු:">Direct:</span> <strong id="shop2-direct-val">Rs. 0.00</strong> | 
+                                    <span data-en="50% Shared:" data-si="50% පොදු:">50% Shared:</span> <strong id="shop2-shared-val">Rs. 0.00</strong>
+                                </div>
+                            </div>
+                            <div class="shop-item shared">
+                                <div class="shop-details">
+                                    <h4 data-en="Total Shared/Common Cost" data-si="මුළු පොදු වියදම්">Total Shared/Common Cost</h4>
+                                    <span id="shared-total-val" class="shop-cost">Rs. 0.00</span>
+                                </div>
+                                <p class="help-text" data-en="Shared costs are split 50/50 between Shop 1 and Shop 2." data-si="පොදු වියදම් කඩ කාමර 1 සහ 2 අතර 50/50 ලෙස සමානව බෙදා හරිනු ලැබේ.">Shared costs are split 50/50 between Shop 1 and Shop 2.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Charts Column -->
+                    <div class="card chart-card">
+                        <h3 data-en="Category Expense Distribution" data-si="කාණ්ඩ අනුව වියදම් ව්‍යාප්තිය">Category Expense Distribution</h3>
+                        <div class="chart-container">
+                            <canvas id="categoryChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="card chart-card">
+                        <h3 id="comparison-card-title" data-en="Shop Expense Comparison" data-si="කඩ කාමර අනුව වියදම් සංසන්දනය">Shop Expense Comparison</h3>
+                        <div class="chart-container">
+                            <canvas id="shopChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activities / Fast List -->
+                <div class="card recent-activity-card">
+                    <div class="card-header-flex">
+                        <h3 data-en="Recent Expenses" data-si="මෑතකාලීන වියදම්">Recent Expenses</h3>
+                        <a href="#expenses" class="view-all-link" data-tab-link="expenses" data-en="View All Expenses &rarr;" data-si="සියලුම වියදම් බලන්න &rarr;">View All Expenses &rarr;</a>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th data-en="Date" data-si="දිනය">Date</th>
+                                    <th data-en="Item Name" data-si="අයිතමයේ නම">Item Name</th>
+                                    <th data-en="Category" data-si="කාණ්ඩය">Category</th>
+                                    <th data-en="Allocation" data-si="බෙදාහැරීම">Allocation</th>
+                                    <th data-en="Total Cost" data-si="මුළු වියදම">Total Cost</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recent-expenses-tbody">
+                                <!-- Loaded dynamically via Javascript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Expenses Tab Content -->
+            <section id="tab-expenses" class="tab-content">
+                <div class="split-view-container">
+                    <!-- Form Section -->
+                    <div class="card form-card">
+                        <h3 id="expense-form-title" data-en="Add Construction Cost Item" data-si="වියදම් අයිතමයක් එක් කරන්න">Add Construction Cost Item</h3>
+                        <form id="expense-form">
+                            <input type="hidden" id="expense-id">
+                            
+                            <div class="form-group">
+                                <label for="expense-date" data-en="Date" data-si="දිනය">Date</label>
+                                <input type="date" id="expense-date" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="expense-name" data-en="Item Name / Description" data-si="අයිතමයේ නම / විස්තරය">Item Name / Description</label>
+                                <input type="text" id="expense-name" placeholder="e.g. 50 bags of cement, Mason advance" required>
+                            </div>
+                            
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="expense-category" data-en="Category" data-si="කාණ්ඩය">Category</label>
+                                    <select id="expense-category" required>
+                                        <option value="Cement" data-en="Cement" data-si="සිමෙන්ති">Cement</option>
+                                        <option value="Sand" data-en="Sand" data-si="වැලි">Sand</option>
+                                        <option value="Metal/Iron" data-en="Metal/Iron" data-si="යකඩ / ලෝහ">Metal/Iron</option>
+                                        <option value="Bricks/Blocks" data-en="Bricks/Blocks" data-si="ගඩොල් / කොන්ක්‍රීට් ගල්">Bricks/Blocks</option>
+                                        <option value="Wood/Timber" data-en="Wood/Timber" data-si="ලී / දැව">Wood/Timber</option>
+                                        <option value="Labor" data-en="Labor/Contractor" data-si="කම්කරු කුලී / කොන්ත්‍රාත්">Labor</option>
+                                        <option value="Permits" data-en="Legal/Permits" data-si="අවසර පත්‍ර / නීතිමය">Permits</option>
+                                        <option value="Transport" data-en="Transport/Delivery" data-si="ප්‍රවාහන වියදම්">Transport</option>
+                                        <option value="Plumbing" data-en="Plumbing" data-si="නල මාර්ග (Plumbing)">Plumbing</option>
+                                        <option value="Electrical" data-en="Electrical" data-si="විදුලි වැඩ (Electrical)">Electrical</option>
+                                        <option value="Roofing" data-en="Roofing" data-si="වහල වැඩ">Roofing</option>
+                                        <option value="Other" data-en="Other/Miscellaneous" data-si="වෙනත් වියදම්">Other</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="expense-shop" data-en="Shop Allocation" data-si="කඩ කාමරය">Shop Allocation</label>
+                                    <select id="expense-shop" required>
+                                        <option value="shop1" data-en="Shop 1 (Direct)" data-si="කඩ කාමරය 1 (සෘජු)">Shop 1</option>
+                                        <option value="shop2" data-en="Shop 2 (Direct)" data-si="කඩ කාමරය 2 (සෘජු)">Shop 2</option>
+                                        <option value="shared" data-en="Shared / Both Shops" data-si="පොදු / කඩ කාමර දෙකටම">Shared</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="expense-unit-price" data-en="Unit Price (Rs.)" data-si="ඒකක මිල (රු.)">Unit Price (Rs.)</label>
+                                    <input type="number" id="expense-unit-price" min="0" step="0.01" placeholder="0.00" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="expense-qty" data-en="Quantity" data-si="ප්‍රමාණය">Quantity</label>
+                                    <input type="number" id="expense-qty" min="0.01" step="0.01" value="1" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="expense-total" data-en="Calculated Total (Rs.)" data-si="ගණනය කළ මුළු වියදම (රු.)">Calculated Total (Rs.)</label>
+                                <input type="number" id="expense-total" readonly class="readonly-input">
+                            </div>
+
+                            <!-- Live Camera Receipt upload -->
+                            <div class="form-group">
+                                <label data-en="Receipt / Item Image" data-si="රිසිට්පත හෝ අයිතමයේ ඡායාරූපය">Receipt / Item Image</label>
+                                <div class="photo-input-container">
+                                    <input type="file" id="expense-photo" accept="image/*" style="display: none;">
+                                    <input type="hidden" id="expense-photo-base64">
+                                    
+                                    <button type="button" class="btn btn-secondary btn-sm" id="btn-expense-upload-photo">
+                                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                                        <span data-en="Upload Photo" data-si="උඩුගත කරන්න">Upload Photo</span>
+                                    </button>
+                                    <button type="button" class="btn btn-secondary btn-sm" id="btn-expense-capture-photo">
+                                        <i class="fa-solid fa-camera"></i>
+                                        <span data-en="Take Capture" data-si="ඡායාරූපයක් ගන්න">Take Capture</span>
+                                    </button>
+                                </div>
+                                <div class="photo-preview-box" id="expense-photo-preview" style="display: none;">
+                                    <img id="img-expense-preview-src" src="" alt="Receipt Preview">
+                                    <button type="button" class="btn-remove-photo" id="btn-remove-expense-photo" title="Remove Photo">&times;</button>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary" id="btn-save-expense" data-en="Save Item" data-si="සුරකින්න">Save Item</button>
+                                <button type="button" class="btn btn-secondary" id="btn-cancel-expense" data-en="Cancel" data-si="අවලංගු කරන්න" style="display:none;">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- List Section -->
+                    <div class="card list-card">
+                        <div class="list-filters">
+                            <div class="search-box">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <input type="text" id="expense-search" placeholder="Search items..." data-en-placeholder="Search items..." data-si-placeholder="අයිතම සොයන්න...">
+                            </div>
+                            <div class="filter-box">
+                                <select id="filter-shop-select">
+                                    <option value="all" data-en="All Shops" data-si="සියලුම කඩ කාමර">All Shops</option>
+                                    <option value="shop1" data-en="Shop 1" data-si="කඩ කාමරය 1">Shop 1</option>
+                                    <option value="shop2" data-en="Shop 2" data-si="කඩ කාමරය 2">Shop 2</option>
+                                    <option value="shared" data-en="Shared" data-si="පොදු">Shared</option>
+                                </select>
+                                <select id="filter-category-select">
+                                    <option value="all" data-en="All Categories" data-si="සියලුම කාණ්ඩ">All Categories</option>
+                                    <option value="Cement" data-en="Cement" data-si="සිමෙන්ති">Cement</option>
+                                    <option value="Sand" data-en="Sand" data-si="වැලි">Sand</option>
+                                    <option value="Metal/Iron" data-en="Metal/Iron" data-si="යකඩ / ලෝහ">Metal/Iron</option>
+                                    <option value="Bricks/Blocks" data-en="Bricks/Blocks" data-si="ගඩොල් / කොන්ක්‍රීට් ගල්">Bricks/Blocks</option>
+                                    <option value="Wood/Timber" data-en="Wood/Timber" data-si="ලී / දැව">Wood/Timber</option>
+                                    <option value="Labor" data-en="Labor/Contractor" data-si="කම්කරු කුලී">Labor</option>
+                                    <option value="Permits" data-en="Legal/Permits" data-si="නීතිමය / අවසර">Permits</option>
+                                    <option value="Transport" data-en="Transport/Delivery" data-si="ප්‍රවාහන">Transport</option>
+                                    <option value="Plumbing" data-en="Plumbing" data-si="නල මාර්ග (Plumbing)">Plumbing</option>
+                                    <option value="Electrical" data-en="Electrical" data-si="විදුලි වැඩ (Electrical)">Electrical</option>
+                                    <option value="Roofing" data-en="Roofing" data-si="වහල වැඩ">Roofing</option>
+                                    <option value="Other" data-en="Other" data-si="වෙනත්">Other</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive ledger-table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 50px;" data-en="Photo" data-si="රූප">Photo</th>
+                                        <th data-en="Date" data-si="දිනය">Date</th>
+                                        <th data-en="Item Name" data-si="අයිතමය">Item Name</th>
+                                        <th data-en="Category" data-si="කාණ්ඩය">Category</th>
+                                        <th data-en="Allocation" data-si="බෙදාහැරීම">Allocation</th>
+                                        <th data-en="Qty & Price" data-si="ප්‍රමාණය සහ මිල">Qty & Price</th>
+                                        <th data-en="Total (Rs.)" data-si="මුළු මුදල (රු.)">Total (Rs.)</th>
+                                        <th style="width: 80px;" data-en="Actions" data-si="ක්‍රියා">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="expenses-ledger-tbody">
+                                    <!-- Loaded dynamically via Javascript -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="table-footer-summary">
+                            <span data-en="Showing filtered total:" data-si="පෙරන ලද මුළු එකතුව:">Showing filtered total:</span>
+                            <strong id="val-filtered-total">Rs. 0.00</strong>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Payments Tab Content -->
+            <section id="tab-payments" class="tab-content">
+                <div class="split-view-container">
+                    <!-- Form Section -->
+                    <div class="card form-card">
+                        <h3 id="payment-form-title" data-en="Record Contractor / Supplier Payment" data-si="කොන්ත්‍රාත්කරු / සපයන්නන්ගේ ගෙවීම්">Record Contractor / Supplier Payment</h3>
+                        <form id="payment-form">
+                            <input type="hidden" id="payment-id">
+
+                            <div class="form-group">
+                                <label for="payment-date" data-en="Payment Date" data-si="දිනය">Payment Date</label>
+                                <input type="date" id="payment-date" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="payment-recipient" data-en="Paid To (Contractor/Supplier Name)" data-si="කා හටද ගෙවනු ලැබුවේ (නම)">Paid To (Contractor/Supplier Name)</label>
+                                <input type="text" id="payment-recipient" placeholder="e.g. Ruwan (Mason), Nimal (Sand Vendor)" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="payment-amount" data-en="Amount Paid (Rs.)" data-si="ගෙවූ මුදල (රු.)">Amount Paid (Rs.)</label>
+                                <input type="number" id="payment-amount" min="0.01" step="0.01" placeholder="0.00" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="payment-method" data-en="Payment Method" data-si="ගෙවීම් ක්‍රමය">Payment Method</label>
+                                <select id="payment-method" required>
+                                    <option value="Cash" data-en="Cash" data-si="අත්පිට මුදල්">Cash</option>
+                                    <option value="Bank Transfer" data-en="Bank Transfer" data-si="බැංකු ප්‍රේෂණ">Bank Transfer</option>
+                                    <option value="Cheque" data-en="Cheque" data-si="චෙක්පත්">Cheque</option>
+                                    <option value="Other" data-en="Other" data-si="වෙනත්">Other</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="payment-notes" data-en="Notes / Description" data-si="විස්තරය / සටහන">Notes / Description</label>
+                                <textarea id="payment-notes" rows="3" placeholder="e.g. Advance for bricklaying, final settling invoice #422"></textarea>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-success" id="btn-save-payment" data-en="Record Payment" data-si="ගෙවීම සුරකින්න">Record Payment</button>
+                                <button type="button" class="btn btn-secondary" id="btn-cancel-payment" data-en="Cancel" data-si="අවලංගු කරන්න" style="display:none;">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Payments List Section -->
+                    <div class="card list-card">
+                        <div class="list-filters">
+                            <div class="search-box">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <input type="text" id="payment-search" placeholder="Search payments..." data-en-placeholder="Search payments..." data-si-placeholder="ගෙවීම් සොයන්න...">
+                            </div>
+                        </div>
+
+                        <div class="table-responsive ledger-table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th data-en="Date" data-si="දිනය">Date</th>
+                                        <th data-en="Paid To" data-si="කා හටද ගෙවනු ලැබුවේ">Paid To</th>
+                                        <th data-en="Method" data-si="ගෙවීම් ක්‍රමය">Method</th>
+                                        <th data-en="Notes" data-si="විස්තරය / සටහන">Notes</th>
+                                        <th data-en="Amount (Rs.)" data-si="ගෙවූ මුදල (රු.)">Amount (Rs.)</th>
+                                        <th style="width: 80px;" data-en="Actions" data-si="ක්‍රියා">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="payments-ledger-tbody">
+                                    <!-- Loaded dynamically via Javascript -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="table-footer-summary">
+                            <span data-en="Total Payments Made:" data-si="මුළු ගෙවීම් එකතුව:">Total Payments Made:</span>
+                            <strong id="val-payment-total" style="color: var(--color-success);">Rs. 0.00</strong>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Drawings & Site Photos Tab Content -->
+            <section id="tab-drawings" class="tab-content">
+                <div class="drawings-control-panel card">
+                    <div class="panel-header-flex">
+                        <div>
+                            <h3 data-en="Project Drawing Sheets & Sketches" data-si="ඉදිකිරීම් සැලසුම් සහ ඇඳීම්">Project Drawing Sheets & Sketches</h3>
+                            <p class="panel-desc" data-en="Keep track of building blueprints, land plans, or capture live site pictures of the in-progress project sections to monitor construction." data-si="ගොඩනැඟිලි සැලසුම්, ඉඩම් සැලසුම් මෙන්ම ඉදිකිරීම් සිදුවන ආකාරය දැක්වෙන ප්‍රගති ඡායාරූප සජීවීව කැමරාවෙන් ගෙන මෙහි එකතු කර තබා ගන්න.">Keep track of building blueprints, land plans, or capture live site pictures of the in-progress project sections to monitor construction.</p>
+                        </div>
+                        <div class="drawings-action-buttons">
+                            <button class="btn btn-primary" id="btn-open-upload-modal">
+                                <i class="fa-solid fa-cloud-arrow-up"></i>
+                                <span data-en="Upload Photo" data-si="සැලැස්මක් එක් කරන්න">Upload Photo</span>
+                            </button>
+                            <button class="btn btn-success" id="btn-open-sketch-modal">
+                                <i class="fa-solid fa-pen-ruler"></i>
+                                <span data-en="Drawing Pad" data-si="ඇඳීම් පුවරුව">Drawing Pad</span>
+                            </button>
+                            <button class="btn btn-primary" id="btn-open-template-modal">
+                                <i class="fa-solid fa-compass-drafting"></i>
+                                <span data-en="Add Template Plan" data-si="සැලසුම් ආකෘතියක් එක් කරන්න">Add Template Plan</span>
+                            </button>
+                            <button class="btn btn-primary" id="btn-capture-progress-photo">
+                                <i class="fa-solid fa-camera"></i>
+                                <span data-en="Capture Progress" data-si="සජීවී ඡායාරූපයක් ගන්න">Capture Progress</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Drawings Grid -->
+                <div class="drawings-grid" id="drawings-gallery-grid">
+                    <!-- Dynamically populated from JavaScript -->
+                </div>
+            </section>
+
+            <!-- Reports and Backup Tab Content -->
+            <section id="tab-reports" class="tab-content">
+                <div class="reports-container">
+                    <div class="card printable-card" id="printable-report-area">
+                        <!-- Invoice-style printable sheet header -->
+                        <div class="report-print-header">
+                            <div class="report-brand">
+                                <h1 id="report-project-title" style="text-transform: uppercase;">PROJECT REPORT</h1>
+                                <p data-en="Land Construction & Finance Statement" data-si="ඉඩම් ඉදිකිරීම් සහ මුල්‍ය ගිණුම් ප්‍රකාශය">Land Construction & Finance Statement</p>
+                            </div>
+                            <div class="report-meta">
+                                <p><strong>Date Generated:</strong> <span id="report-gen-date">--/--/----</span></p>
+                                <p><strong>Status:</strong> <span class="badge badge-active" data-en="In Progress" data-si="ක්‍රියාත්මක වෙමින් පවතී">In Progress</span></p>
+                            </div>
+                        </div>
+
+                        <hr class="report-divider">
+
+                        <!-- Main Financial Summaries in Report -->
+                        <div class="report-summary-boxes">
+                            <div class="report-box">
+                                <h4 data-en="Estimated Budget" data-si="ඇස්තමේන්තුගත මුළු මුදල">Estimated Budget</h4>
+                                <p id="rep-budget">Rs. 0.00</p>
+                            </div>
+                            <div class="report-box">
+                                <h4 data-en="Total Expenses" data-si="මුළු වියදම">Total Expenses</h4>
+                                <p id="rep-expenses">Rs. 0.00</p>
+                            </div>
+                            <div class="report-box">
+                                <h4 data-en="Total Paid Out" data-si="ගෙවා ඇති මුළු මුදල">Total Paid Out</h4>
+                                <p id="rep-paid">Rs. 0.00</p>
+                            </div>
+                            <div class="report-box">
+                                <h4 data-en="Outstanding Due" data-si="ගෙවීමට ඇති ඉතිරිය">Outstanding Due</h4>
+                                <p id="rep-due">Rs. 0.00</p>
+                            </div>
+                        </div>
+
+                        <!-- Shop Allocations Summary -->
+                        <h3 class="section-title" data-en="Construction Cost Allocation Summary" data-si="වියදම් ව්‍යාප්තිය පිළිබඳ සාරාංශය">Construction Cost Allocation Summary</h3>
+                        <div class="report-shop-grid" id="project-report-shop-grid">
+                            <div class="report-shop-card">
+                                <h4 data-en="SHOP 01 COSTS" data-si="කඩ කාමර 01 වියදම්">SHOP 01 COSTS</h4>
+                                <div class="row-stat">
+                                    <span data-en="Direct Cost (Only Shop 1)" data-si="සෘජු වියදම (කඩ 1)">Direct Cost (Only Shop 1)</span>
+                                    <span id="rep-shop1-direct">Rs. 0.00</span>
+                                </div>
+                                <div class="row-stat">
+                                    <span data-en="Shared/Common Allocation (50%)" data-si="පොදු වියදම්වලින් 50% ක්">Shared/Common Allocation (50%)</span>
+                                    <span id="rep-shop1-shared">Rs. 0.00</span>
+                                </div>
+                                <hr class="mini-divider">
+                                <div class="row-stat total-stat">
+                                    <span data-en="Total Shop 1 cost" data-si="කඩ කාමර 1 හි මුළු වියදම">Total Shop 1 cost</span>
+                                    <span id="rep-shop1-total">Rs. 0.00</span>
+                                </div>
+                            </div>
+                            
+                            <div class="report-shop-card">
+                                <h4 data-en="SHOP 02 COSTS" data-si="කඩ කාමර 02 වියදම්">SHOP 02 COSTS</h4>
+                                <div class="row-stat">
+                                    <span data-en="Direct Cost (Only Shop 2)" data-si="සෘජු වියදම (කඩ 2)">Direct Cost (Only Shop 2)</span>
+                                    <span id="rep-shop2-direct">Rs. 0.00</span>
+                                </div>
+                                <div class="row-stat">
+                                    <span data-en="Shared/Common Allocation (50%)" data-si="පොදු වියදම්වලින් 50% ක්">Shared/Common Allocation (50%)</span>
+                                    <span id="rep-shop2-shared">Rs. 0.00</span>
+                                </div>
+                                <hr class="mini-divider">
+                                <div class="row-stat total-stat">
+                                    <span data-en="Total Shop 2 cost" data-si="කඩ කාමර 2 හි මුළු වියදම">Total Shop 2 cost</span>
+                                    <span id="rep-shop2-total">Rs. 0.00</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Category Summaries Table -->
+                        <h3 class="section-title" data-en="Category Cost Breakdown" data-si="වියදම් වර්ගීකරණ සාරාංශය">Category Cost Breakdown</h3>
+                        <table class="report-table">
+                            <thead id="report-category-thead">
+                                <tr>
+                                    <th data-en="Expense Category" data-si="වියදම් කාණ්ඩය">Expense Category</th>
+                                    <th data-en="Shop 1 Cost" data-si="කඩ 1 වියදම">Shop 1 Cost</th>
+                                    <th data-en="Shop 2 Cost" data-si="කඩ 2 වියදම">Shop 2 Cost</th>
+                                    <th data-en="Shared Cost" data-si="පොදු වියදම">Shared Cost</th>
+                                    <th data-en="Category Total" data-si="කාණ්ඩයේ මුළු එකතුව">Category Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="report-category-tbody">
+                                <!-- Loaded dynamically via JS -->
+                            </tbody>
+                        </table>
+
+                        <p class="report-disclaimer" data-en="* This is a computer-generated summary based on local transactions logged by the project administrator." data-si="* මෙය ව්‍යාපෘති පරිපාලක විසින් ඇතුළත් කරන ලද ගනුදෙනු දත්ත මත පදනම්ව ස්වයංක්‍රීයව සකස් කරන ලද වාර්තාවකි.">* This is a computer-generated summary based on local transactions logged by the project administrator.</p>
+                    </div>
+
+                    <!-- Action buttons outside the printable card -->
+                    <div class="report-actions-panel card">
+                        <h3 data-en="Report Tools & Data Actions" data-si="වාර්තා සකස් කිරීම් සහ දත්ත මෙවලම්">Report Tools & Data Actions</h3>
+                        
+                        <div class="actions-grid">
+                            <button class="btn btn-primary" onclick="window.print()">
+                                <i class="fa-solid fa-print"></i>
+                                <span data-en="Print / Save PDF Report" data-si="මුද්‍රණය කරන්න / PDF ලෙස සුරකින්න">Print / Save PDF Report</span>
+                            </button>
+                            <button class="btn btn-success" id="btn-export-csv">
+                                <i class="fa-solid fa-file-csv"></i>
+                                <span data-en="Export Expenses to CSV" data-si="වියදම් CSV ගොනුවක් ලෙස බාගන්න">Export Expenses to CSV</span>
+                            </button>
+                        </div>
+
+                        <hr class="panel-divider">
+
+                        <h4 data-en="Database Backup & Restore" data-si="දත්ත උපස්ථ කිරීම සහ නැවත පිහිටුවීම (Backup & Restore)">Database Backup & Restore</h4>
+                        <p class="panel-desc" data-en="Since all data is saved on this browser, use backups to move files or prevent data loss when cleaning your web browser cache." data-si="සියලුම දත්ත ඔබගේ වෙබ් බ්‍රව්සරයේ ගබඩා වන බැවින්, දත්ත වෙනත් පරිගණකයකට ගැනීමට හෝ දත්ත නැතිවීම වැළැක්වීමට මෙතැනින් Backup ගොනුවක් බාගත කර තබා ගන්න.">Since all data is saved on this browser, use backups to move files or prevent data loss when cleaning your web browser cache.</p>
+                        
+                        <div class="backup-actions">
+                            <button class="btn btn-secondary" id="btn-export-json">
+                                <i class="fa-solid fa-download"></i>
+                                <span data-en="Download Data Backup" data-si="දත්ත උපස්ථ ගොනුව (Backup JSON) බාගන්න">Download Data Backup</span>
+                            </button>
+                            
+                            <div class="import-wrapper">
+                                <label for="input-import-json" class="btn btn-secondary import-btn-label">
+                                    <i class="fa-solid fa-upload"></i>
+                                    <span data-en="Restore Data Backup" data-si="උපස්ථ ගොනුවකින් දත්ත පිහිටුවන්න (Restore JSON)">Restore Data Backup</span>
+                                </label>
+                                <input type="file" id="input-import-json" accept=".json" style="display: none;">
+                            </div>
+                        </div>
+
+                        <hr class="panel-divider">
+                        
+                        <div class="danger-zone">
+                            <h4 data-en="Danger Zone" data-si="අනතුරුදායක කලාපය">Danger Zone</h4>
+                            <button class="btn btn-danger" id="btn-clear-database">
+                                <i class="fa-solid fa-trash-can"></i>
+                                <span data-en="Delete All Data Permanently" data-si="සියලුම දත්ත සදහටම මකා දමන්න">Delete All Data Permanently</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Quick Expense Modal -->
+    <div id="quick-expense-modal" class="modal">
+        <div class="modal-content card">
+            <span class="modal-close-btn" data-close-target="quick-expense-modal">&times;</span>
+            <h3 data-en="Add Expense Quick Log" data-si="ඉක්මනින් වියදමක් ඇතුළත් කරන්න">Add Expense Quick Log</h3>
+            <form id="quick-expense-form">
+                <div class="form-group">
+                    <label for="quick-date" data-en="Date" data-si="දිනය">Date</label>
+                    <input type="date" id="quick-date" required>
+                </div>
+                <div class="form-group">
+                    <label for="quick-name" data-en="Item Name / Description" data-si="අයිතමයේ නම / විස්තරය">Item Name / Description</label>
+                    <input type="text" id="quick-name" placeholder="e.g. Sand load" required>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="quick-category" data-en="Category" data-si="කාණ්ඩය">Category</label>
+                        <select id="quick-category" required>
+                            <option value="Cement" data-en="Cement" data-si="සිමෙන්ති">Cement</option>
+                            <option value="Sand" data-en="Sand" data-si="වැලි">Sand</option>
+                            <option value="Metal/Iron" data-en="Metal/Iron" data-si="යකඩ / ලෝහ">Metal/Iron</option>
+                            <option value="Bricks/Blocks" data-en="Bricks/Blocks" data-si="ගඩොල් / කොන්ක්‍රීට් ගල්">Bricks/Blocks</option>
+                            <option value="Wood/Timber" data-en="Wood/Timber" data-si="ලී / දැව">Wood/Timber</option>
+                            <option value="Labor" data-en="Labor" data-si="කම්කරු කුලී">Labor</option>
+                            <option value="Permits" data-en="Permits" data-si="නීතිමය / අවසර">Permits</option>
+                            <option value="Transport" data-en="Transport" data-si="ප්‍රවාහන">Transport</option>
+                            <option value="Plumbing" data-en="Plumbing" data-si="නල මාර්ග (Plumbing)">Plumbing</option>
+                            <option value="Electrical" data-en="Electrical" data-si="විදුලි වැඩ (Electrical)">Electrical</option>
+                            <option value="Roofing" data-en="Roofing" data-si="වහල වැඩ">Roofing</option>
+                            <option value="Other" data-en="Other" data-si="වෙනත්">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="quick-shop" data-en="Shop Allocation" data-si="කඩ කාමරය">Shop Allocation</label>
+                        <select id="quick-shop" required>
+                            <option value="shop1" data-en="Shop 1" data-si="කඩ කාමරය 1">Shop 1</option>
+                            <option value="shop2" data-en="Shop 2" data-si="කඩ කාමරය 2">Shop 2</option>
+                            <option value="shared" data-en="Shared" data-si="පොදු">Shared</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="quick-unit-price" data-en="Unit Price (Rs.)" data-si="ඒකක මිල (රු.)">Unit Price (Rs.)</label>
+                        <input type="number" id="quick-unit-price" min="0" step="0.01" placeholder="0.00" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="quick-qty" data-en="Quantity" data-si="ප්‍රමාණය">Quantity</label>
+                        <input type="number" id="quick-qty" min="0.01" step="0.01" value="1" required>
+                    </div>
+                </div>
+
+                <!-- Quick Photo Log -->
+                <div class="form-group">
+                    <label data-en="Receipt / Item Image" data-si="ඡායාරූපය හෝ රිසිට්පත">Receipt / Item Image</label>
+                    <div class="photo-input-container">
+                        <input type="file" id="quick-expense-photo" accept="image/*" style="display: none;">
+                        <input type="hidden" id="quick-expense-photo-base64">
+                        
+                        <button type="button" class="btn btn-secondary btn-sm" id="btn-quick-upload-photo">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                            <span data-en="Upload" data-si="උඩුගත කරන්න">Upload</span>
+                        </button>
+                        <button type="button" class="btn btn-secondary btn-sm" id="btn-quick-capture-photo">
+                            <i class="fa-solid fa-camera"></i>
+                            <span data-en="Capture" data-si="කැමරාවෙන්">Capture</span>
+                        </button>
+                    </div>
+                    <div class="photo-preview-box" id="quick-photo-preview" style="display: none;">
+                        <img id="img-quick-preview-src" src="" alt="Receipt Preview">
+                        <button type="button" class="btn-remove-photo" id="btn-remove-quick-photo" title="Remove Photo">&times;</button>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" data-en="Save Expense" data-si="සුරකින්න">Save Expense</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Upload Drawing Sheet Modal -->
+    <div id="upload-drawing-modal" class="modal">
+        <div class="modal-content card">
+            <span class="modal-close-btn" data-close-target="upload-drawing-modal">&times;</span>
+            <h3 data-en="Upload Blueprint / Site Photo" data-si="සැලැස්මක් හෝ ප්‍රගති පින්තූරයක් එක් කරන්න">Upload Blueprint / Site Photo</h3>
+            <form id="upload-drawing-form">
+                <div class="form-group">
+                    <label for="upload-title" data-en="Photo / Sheet Title" data-si="පින්තූරයේ නම හෝ සැලැස්ම">Photo / Sheet Title</label>
+                    <input type="text" id="upload-title" placeholder="e.g. Front elevation, foundation complete" required>
+                </div>
+                <div class="form-group">
+                    <label for="upload-file" data-en="Choose Image File (PNG, JPG)" data-si="රූප රාමුව තෝරන්න (PNG, JPG)">Choose Image File (PNG, JPG)</label>
+                    <input type="file" id="upload-file" accept="image/*" required>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" data-en="Save Sheet" data-si="සුරකින්න">Save Sheet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Canvas Sketch Modal -->
+    <div id="sketch-pad-modal" class="modal">
+        <div class="modal-content card sketch-modal-content">
+            <span class="modal-close-btn" data-close-target="sketch-pad-modal">&times;</span>
+            <h3 data-en="Interactive Drawing Pad" data-si="ඩිජිටල් ඇඳීම් පුවරුව">Interactive Drawing Pad</h3>
+            
+            <div class="canvas-control-bar">
+                <!-- Colors -->
+                <div class="canvas-tool-group">
+                    <span class="tool-label" data-en="Color" data-si="පාට">Color:</span>
+                    <button type="button" class="color-swatch active" data-color="#000000" style="background-color: #000000;"></button>
+                    <button type="button" class="color-swatch" data-color="#0000ff" style="background-color: #0000ff;"></button>
+                    <button type="button" class="color-swatch" data-color="#ff0000" style="background-color: #ff0000;"></button>
+                    <button type="button" class="color-swatch" data-color="#00aa00" style="background-color: #00aa00;"></button>
+                    <button type="button" class="color-swatch" id="canvas-tool-eraser" style="background-color: #ffffff; border: 1px dashed #64748b;" title="Eraser">
+                        <i class="fa-solid fa-eraser" style="color: #64748b; font-size: 11px;"></i>
+                    </button>
+                </div>
+
+                <!-- Sizes -->
+                <div class="canvas-tool-group">
+                    <span class="tool-label" data-en="Size" data-si="ප්‍රමාණය">Size:</span>
+                    <select id="sketch-brush-size" style="width: auto; padding: 4px 8px; font-size: 12px;">
+                        <option value="2">2px (Thin)</option>
+                        <option value="5" selected>5px (Medium)</option>
+                        <option value="10">10px (Thick)</option>
+                        <option value="20">20px (Very Thick)</option>
+                    </select>
+                </div>
+
+                <!-- Grid toggle -->
+                <div class="canvas-tool-group">
+                    <button type="button" class="btn btn-secondary btn-sm" id="btn-toggle-grid" style="padding: 4px 8px; font-size: 12px;">
+                        <i class="fa-solid fa-grid-2"></i>
+                        <span data-en="Hide Grid" data-si="නෙට් රේඛා සඟවන්න">Hide Grid</span>
+                    </button>
+                </div>
+
+                <!-- Clear -->
+                <div class="canvas-tool-group" style="margin-left: auto;">
+                    <button type="button" class="btn btn-danger" id="btn-clear-canvas" style="padding: 6px 12px; font-size: 12px;">
+                        <i class="fa-solid fa-trash"></i>
+                        <span data-en="Clear" data-si="මකන්න">Clear</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Canvas Drawing Area -->
+            <div class="canvas-wrapper">
+                <canvas id="sketch-canvas" width="800" height="500"></canvas>
+            </div>
+
+            <div class="form-group" style="margin-top: 15px;">
+                <label for="sketch-title" data-en="Sketch Title" data-si="සිතුවමේ නම">Sketch Title</label>
+                <input type="text" id="sketch-title" placeholder="e.g. Rough gate design, toilet outline" required>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn btn-success" id="btn-save-sketch" data-en="Save Sketch as Sheet" data-si="සැලැස්මක් ලෙස සුරකින්න">Save Sketch as Sheet</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Blueprint Template Generator Modal (NEW) -->
+    <div id="template-generator-modal" class="modal">
+        <div class="modal-content card template-modal-content">
+            <span class="modal-close-btn" data-close-target="template-generator-modal">&times;</span>
+            <h3 data-en="Blueprint Template Generator" data-si="සැලසුම් ආකෘති නිර්මාණය">Blueprint Template Generator</h3>
+            
+            <div class="template-generator-split">
+                <!-- Controls (Left) -->
+                <div class="template-controls-form">
+                    <div class="form-group">
+                        <label for="template-structure-type" data-en="Structure Type" data-si="ගොඩනැඟිලි වර්ගය">Structure Type</label>
+                        <select id="template-structure-type">
+                            <option value="room" data-en="Single Room" data-si="තනි කාමරය" selected>Single Room</option>
+                            <option value="store" data-en="Store Room" data-si="ගබඩා කාමරය">Store Room</option>
+                            <option value="house" data-en="Simple House (4 Rooms)" data-si="සරල නිවස (කාමර 4)">Simple House (4 Rooms)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="template-length" data-en="Length (Feet)" data-si="දිග (අඩි)">Length (Feet)</label>
+                            <input type="number" id="template-length" min="5" max="100" value="20" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="template-width" data-en="Width (Feet)" data-si="පළල (අඩි)">Width (Feet)</label>
+                            <input type="number" id="template-width" min="5" max="100" value="12" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="template-title" data-en="Sheet Title" data-si="සැලැස්මේ නම">Sheet Title</label>
+                        <input type="text" id="template-title" placeholder="e.g. Backyard Store, Guest Room" required>
+                    </div>
+                    
+                    <div class="template-info-box">
+                        <div class="info-row">
+                            <span data-en="Calculated Area:" data-si="මුළු වර්ග ප්‍රමාණය:">Calculated Area:</span>
+                            <strong id="template-calc-area">240 Sq.Ft</strong>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions" style="margin-top: 15px;">
+                        <button type="button" class="btn btn-success" id="btn-save-template-plan" data-en="Add to Gallery" data-si="ගැලරියට එක් කරන්න">Add to Gallery</button>
+                    </div>
+                </div>
+                
+                <!-- Blueprint Canvas Live Preview (Right) -->
+                <div class="template-canvas-preview">
+                    <div class="canvas-wrapper has-grid" style="background-color: #0f4c81; width: 100%;">
+                        <canvas id="template-preview-canvas" width="500" height="350"></canvas>
+                    </div>
+                    <p class="preview-note" data-en="* Layout scales automatically. Windows, doors, and rooms adjust dynamically." data-si="* දිග පළල අනුව බිත්ති, දොර ජනෙල් සහ කාමර ස්වයංක්‍රීයව සකස් වේ.">* Layout scales automatically. Windows, doors, and rooms adjust dynamically.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Budget Manager Modal -->
+    <div id="budget-manager-modal" class="modal">
+        <div class="modal-content card">
+            <span class="modal-close-btn" data-close-target="budget-manager-modal">&times;</span>
+            <h3 data-en="Project Budget Manager" data-si="අයවැය කළමනාකරණය">Project Budget Manager</h3>
+            
+            <div class="template-info-box" style="margin-top: 0; margin-bottom: 20px;">
+                <div class="info-row">
+                    <span data-en="Current Budget:" data-si="පවතින අයවැය:">Current Budget:</span>
+                    <strong id="budget-manager-current-val">Rs. 0.00</strong>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="budget-manager-amount" data-en="Amount (Rs.)" data-si="මුදල (රු.)">Amount (Rs.)</label>
+                <input type="number" id="budget-manager-amount" min="0" data-en="Amount" data-si="මුදල" data-en-placeholder="e.g. 500000" data-si-placeholder="උදා: 500000" placeholder="e.g. 500000" step="any">
+            </div>
+
+            <div class="form-actions-flex" style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
+                <button type="button" class="btn btn-success" id="btn-budget-set-custom" style="flex: 1; min-width: 140px;">
+                    <i class="fa-solid fa-check"></i>
+                    <span data-en="Set New Budget" data-si="නව අයවැය">Set New Budget</span>
+                </button>
+                <button type="button" class="btn btn-primary" id="btn-budget-add-amount" style="flex: 1; min-width: 140px;">
+                    <i class="fa-solid fa-plus"></i>
+                    <span data-en="Add to Budget" data-si="අයවැයට එකතු කරන්න">Add to Budget</span>
+                </button>
+            </div>
+
+            <hr style="border: 0; border-top: 1px solid var(--border-color); margin-bottom: 20px;">
+
+            <h4 data-en="Quick Budget Tools" data-si="ඉක්මන් අයවැය මෙවලම්" style="margin-bottom: 10px;">Quick Budget Tools</h4>
+            <div class="form-actions-flex" style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <button type="button" class="btn btn-danger" id="btn-budget-zero" style="flex: 1; min-width: 140px;">
+                    <i class="fa-solid fa-trash-can"></i>
+                    <span data-en="Zero Budget (0)" data-si="ශුන්‍ය (0) කරන්න">Zero Budget (0)</span>
+                </button>
+                <button type="button" class="btn btn-warning" id="btn-budget-autofill" style="flex: 1; min-width: 140px;">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <span data-en="Auto-Fill Expenses" data-si="වියදම් අනුව පිරවීම">Auto-Fill Expenses</span>
+                </button>
+                <button type="button" class="btn btn-secondary" id="btn-budget-autofill-buffer" style="flex: 1; min-width: 140px;">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span data-en="Auto-Fill + 10%" data-si="වියදම් + 10%">Auto-Fill + 10%</span>
+                </button>
+                <button type="button" class="btn btn-danger" id="btn-budget-clear-all" style="flex: 1; min-width: 140px; background-color: #be123c; border-color: #be123c;">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <span data-en="Reset Project Records" data-si="සියලු වාර්තා මකා දමන්න">Reset Project Records</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Manager Modal -->
+    <div id="project-manager-modal" class="modal">
+        <div class="modal-content card" style="max-width: 450px;">
+            <span class="modal-close-btn" data-close-target="project-manager-modal">&times;</span>
+            <h3 data-en="Manage Workspaces" data-si="ව්‍යාපෘති කළමනාකරණය">Manage Workspaces</h3>
+            
+            <!-- Create New Project Section -->
+            <div style="background-color: var(--bg-primary); border: 1px solid var(--border-color); border-radius: var(--border-radius-sm); padding: 16px; margin-bottom: 20px;">
+                <h4 data-en="Create New Project" data-si="නව ව්‍යාපෘතියක් සාදන්න" style="margin-bottom: 12px; font-weight: 700;">Create New Project</h4>
+                <form id="project-create-form">
+                    <div class="form-group">
+                        <label for="project-create-name" data-en="Project Name" data-si="ව්‍යාපෘති නම">Project Name</label>
+                        <input type="text" id="project-create-name" placeholder="e.g. My Annex, House project" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="project-create-type" data-en="Project Type" data-si="ව්‍යාපෘති වර්ගය">Project Type</label>
+                        <select id="project-create-type" required style="width: 100%; padding: 10px 14px; border: 1px solid var(--border-color); background-color: var(--bg-secondary); color: var(--text-primary); border-radius: var(--border-radius-sm);">
+                            <option value="commercial" data-en="Commercial Shop (කඩ කාමර)" data-si="කඩ කාමර ව්‍යාපෘතිය">Commercial Shop (කඩ කාමර)</option>
+                            <option value="residential" data-en="Residential House (නිවස)" data-si="නිවාස ව්‍යාපෘතිය">Residential House (නිවස)</option>
+                            <option value="annex" data-en="Annex / Single Room (කාමරය)" data-si="ඇනෙක්ස් / තනි කාමරය">Annex / Single Room (කාමරය)</option>
+                            <option value="factory" data-en="Factory (කර්මාන්තශාලාව)" data-si="කර්මාන්තශාලා ව්‍යාපෘතිය">Factory (කර්මාන්තශාලාව)</option>
+                            <option value="storeroom" data-en="Storeroom (ගබඩා කාමරය)" data-si="ගබඩා කාමර ව්‍යාපෘතිය">Storeroom (ගබඩා කාමරය)</option>
+                            <option value="hall" data-en="Hall (ශාලාව)" data-si="ශාලා ව්‍යාපෘතිය">Hall (ශාලාව)</option>
+                            <option value="open_area" data-en="Open Area (විවෘත ප්‍රදේශය)" data-si="විවෘත ප්‍රදේශ ව්‍යාපෘතිය">Open Area (විවෘත ප්‍රදේශය)</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-sm" style="width: 100%; margin-top: 12px;">
+                        <i class="fa-solid fa-plus"></i>
+                        <span data-en="Create Project" data-si="ව්‍යාපෘතිය සාදන්න">Create Project</span>
+                    </button>
+                </form>
+            </div>
+            
+            <!-- Manage Active Project Section -->
+            <div>
+                <h4 data-en="Active Project Actions" data-si="ව්‍යාපෘති ක්‍රියාමාර්ග" style="margin-bottom: 12px; font-weight: 700;">Active Project Actions</h4>
+                <div class="form-group">
+                    <label for="project-rename-input" data-en="Rename Active Project" data-si="පවතින ව්‍යාපෘතියේ නම වෙනස් කරන්න">Rename Active Project</label>
+                    <div style="display: flex; gap: 8px;">
+                        <input type="text" id="project-rename-input" placeholder="Enter new name..." style="flex: 1;">
+                        <button type="button" id="btn-project-rename" class="btn btn-success btn-sm">
+                            <span data-en="Rename" data-si="නම වෙනස් කරන්න">Rename</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 20px 0;">
+                
+                <button type="button" id="btn-project-delete" class="btn btn-danger btn-sm" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; background-color: #be123c; border-color: #be123c;">
+                    <i class="fa-solid fa-trash-can"></i>
+                    <span data-en="Delete Current Project" data-si="පවතින ව්‍යාපෘතිය මකා දමන්න">Delete Current Project</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Camera Capture Modal -->
+    <div id="camera-modal" class="modal">
+        <div class="modal-content card camera-modal-content">
+            <span class="modal-close-btn" data-close-target="camera-modal">&times;</span>
+            <h3 data-en="Live Camera Capture" data-si="සජීවී ඡායාරූපය ලබා ගැනීම">Live Camera Capture</h3>
+            
+            <div class="camera-stream-wrapper">
+                <video id="camera-video" autoplay playsinline></video>
+                <div class="camera-grid-overlay"></div>
+            </div>
+            
+            <div class="camera-controls">
+                <button type="button" class="btn btn-primary btn-lg" id="btn-capture-camera-frame">
+                    <i class="fa-solid fa-circle-dot"></i>
+                    <span data-en="Capture Photo" data-si="ඡායාරූපය ගන්න">Capture Photo</span>
+                </button>
+                <button type="button" class="btn btn-secondary" id="btn-switch-camera">
+                    <i class="fa-solid fa-camera-rotate"></i>
+                    <span data-en="Switch Cam" data-si="කැමරාව මාරු කරන්න">Switch Cam</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Drawing Preview Modal -->
+    <div id="preview-drawing-modal" class="modal">
+        <div class="modal-content card preview-modal-content">
+            <span class="modal-close-btn" data-close-target="preview-drawing-modal">&times;</span>
+            <h3 id="preview-drawing-title">Drawing Preview</h3>
+            <div class="preview-img-container">
+                <img id="preview-drawing-img" src="" alt="Drawing Preview">
+            </div>
+        </div>
+    </div>
+
+    <!-- Script file -->
+    <script src="app.js?v=6.0"></script>
+</body>
+</html>

@@ -1,0 +1,182 @@
+[
+  {
+    "id": "draw-house-1",
+    "title": "Modern 2-Bedroom Layout 1",
+    "title_si": "\u0db1\u0dd6\u0dad\u0db1 \u0d9a\u0dcf\u0db8\u0dbb 2\u0d9a \u0dc3\u0dd0\u0dbd\u0dd0\u0dc3\u0dca\u0db8 1",
+    "desc": "Architectural Floor Plan Template. Original: 1 PLATE 79 GRUNDRISS DES HAUPT UND OBERGESCHOSSES FLOOR PLAN.",
+    "desc_si": "\u0d86\u0d9a\u0dd8\u0dad\u0dd2\u0db8\u0dba \u0db1\u0dd2\u0dc0\u0dcf\u0dc3 \u0db6\u0dd2\u0db8\u0dca \u0dc3\u0dd0\u0dbd\u0dd0\u0dc3\u0dca\u0db8. \u0db8\u0dd4\u0dbd\u0dca \u0db4\u0dd2\u0da7\u0db4\u0dad: 1 PLATE 79 GRUNDRISS DES HAUPT UND OBERGESCHOSSES FLOOR PLAN.",
+    "src": "house_plans/1._PLATE__79___GRUNDRISS_DES_HAUPT_UND_O.jpg",
+    "isDefault": true
+  },
+  {
+    "id": "draw-house-2",
+    "title": "Traditional Floor Plan 1",
+    "title_si": "\u0dc3\u0dcf\u0db8\u0dca\u0db4\u0dca\u200d\u0dbb\u0daf\u0dcf\u0dba\u0dd2\u0d9a \u0db1\u0dd2\u0dc0\u0dcf\u0dc3 \u0dc3\u0dd0\u0dbd\u0dd0\u0dc3\u0dca\u0db8 1",
+    "desc": "Architectural Floor Plan Template. Original: 178 Central Street Somerville MA.",
+    "desc_si": "\u0d86\u0d9a\u0dd8\u0dad\u0dd2\u0db8\u0dba \u0db1\u0dd2\u0dc0\u0dcf\u0dc3 \u0db6\u0dd2\u0db8\u0dca \u0dc3\u0dd0\u0dbd\u0dd0\u0dc3\u0dca\u0db8. \u0db8\u0dd4\u0dbd\u0dca \u0db4\u0dd2\u0da7\u0db4\u0dad: 178 Central Street Somerville MA.",
+    "src": "house_plans/178_Central_Street_Somerville_MA.png.png",
+    "isDefault": true
+  },
+  {
+    "id": "draw-house-3",
+    "title": "Compact Single Story Plan 1",
+    "title_si": "\u0d9a\u0dd4\u0da9\u0dcf \u0dad\u0db1\u0dd2 \u0db8\u0dc4\u0dbd\u0dca \u0dc3\u0dd0\u0dbd\u0dd0\u0dc3\u0dca\u0db8 1",
+    "desc": "Architectural Floor Plan Template. Original: 1920 Harris Homes plan M1022.",
+    "desc_si": "\u0d86\u0d9a\u0dd8\u0dad\u0dd2\u0db8\u0dba \u0db1\u0dd2\u0dc0\u0dcf\u0dc3 \u0db6\u0dd2\u0db8\u0dca \u0dc3\u0dd0\u0dbd\u0dd0\u0dc3\u0dca\u0db8. \u0db8\u0dd4\u0dbd\u0dca \u0db4\u0dd2\u0da7\u0db4\u0dad: 1920 Harris Homes plan M1022.",
+    "src": "house_plans/1920_Harris_Homes_plan_M1022.jpg.jpg",
+    "isDefault": true
+  },
+  {
+    "id": "draw-house-4",
+    "title": "Double Story Villa Layout 1",
+    "title_si": "\u0daf\u0dd9\u0db8\u0dc4\u0dbd\u0dca \u0dc0\u0dd2\u0dbd\u0dcf \u0dc3\u0dd0\u0dbd\u0dd0\u0dc3\u0dca\u0db8 1",
+    "desc": "Architectural Floor Plan Template. Original: 1924 A Ventura GR 3302.",
+    "desc_si": "\u0d86\u0d9a\u0dd8\u0dad\u0dd2\u0db8\u0dba \u0db1\u0dd2\u0dc0\u0dcf\u0dc3 \u0db6\u0dd2\u0db8\u0dca \u0dc3\u0dd0\u0dbd\u0dd0\u0dc3\u0dca\u0db8. \u0db8\u0dd4\u0dbd\u0dca \u0db4\u0dd2\u0da7\u0db4\u0dad: 1924 A Ventura GR 3302.",
+    "src": "house_plans/1924_A._Ventura_GR_3302.jpg.jpg",
+    "isDefault": true
+  },
+  {
+    "id": "draw-house-5",
+    "title": "Spacious 3-Bedroom House 1",
+    "title_si": "\u0dc0\u0dd2\u0dc1\u0dcf\u0dbd \u0d9a\u0dcf\u0db8\u0dbb 3\u0d9a \u0dc3\u0dd0\u0dbd\u0dd0\u0dc3\u0dca\u0db8 1",
+    "desc": "Architectural Floor Plan Template. Original: 193 of Christians under the Crescent in Asia With illustrati.",
+    "desc_si": "\u0d86\u0d9a\u0dd8\u0dad\u0dd2\u0db8\u0dba \u0db1\u0dd2\u0dc0\u0dcf\u0dc3 \u0db6\u0dd2\u0db8\u0dca \u0dc3\u0dd0\u0dbd\u0dd0\u0dc3\u0dca\u0db8. \u0db8\u0dd4\u0dbd\u0dca \u0db4\u0dd2\u0da7\u0db4\u0dad: 193 of Christians under the Crescent in Asia With illustrati.",
+    "src": "house_plans/193_of__Christians_under_the_Crescent_in.jpg",
+    "isDefault": true
+  },
+  {
+    "id": "draw-house-6",
+    "title": "Eco-Friendly Concept Layout 1",
+    "title_si": "\u0db4\u0dbb\u0dd2\u0dc3\u0dbb \u0dc4\u0dd2\u0dad\u0d9a\u0dcf\u0db8\u0dd3 \u0dc3\u0d82\u0d9a\u0dbd\u0dca\u0db4 \u0dc3\u0dd0\u0dbd\u0dd0\u0dc3\u0dca\u0db8 1",
+    "desc": "Architectural Floor Plan Template. Original: 2 bhk Bungalow floor plan.",
+    "desc_si": "\u0d86\u0d9a\u0dd8\u0dad\u0dd2\u0db8\u0dba \u0db1\u0dd2\u0dc0\u0dcf\u0dc3 \u0db6\u0dd2\u0db8\u0dca \u0dc3\u0dd0\u0dbd\u0dd0\u0dc3\u0dca\u0db8. \u0db8\u0dd4\u0dbd\u0dca \u0db4\u0dd2\u0da7\u0db4\u0dad: 2 bhk Bungalow floor plan.",
+    "src": "house_plans/2_bhk_Bungalow_floor_plan.jpg.jpg",
+    "isDefault": true
+  },
+  {
+    "id": "draw-house-7",
+    "title": "Classic Cottage Layout 1",
+    "title_si": "\u0dc3\u0dcf\u0db8\u0dca\u0db4\u0dca\u200d\u0dbb\u0daf\u0dcf\u0dba\u0dd2\u0d9a \u0d9a\u0ddc\u0da7\u0dda\u0da2\u0dca \u0dc3\u0dd0\u0dbd\u0dd0\u0dc3\u0dca\u0db8 1",
+    "desc": "Architectural Floor Plan Template. Original: 203 of Bidrag till vr odlings hfder utgifna af A Hazelius de.",
+    "desc_si": "\u0d86\u0d9a\u0dd8\u0dad\u0dd2\u0db8\u0dba \u0db1\u0dd2\u0dc0\u0dcf\u0dc3 \u0db6\u0dd2\u0db8\u0dca \u0dc3\u0dd0\u0dbd\u0dd0\u0dc3\u0dca\u0db8. \u0db8\u0dd4\u0dbd\u0dca \u0db4\u0dd2\u0da7\u0db4\u0dad: 203 of Bidrag till vr odlings hfder utgifna af A Hazelius de.",
+    "src": "house_plans/203_of__Bidrag_till_v_r_odlings_h_fder__.jpg",
+    "isDefault": true
+  },
+  {
+    "id": "draw-house-8",
+    "title": "Open Concept Floor Plan 1",
+    "title_si": "\u0dc0\u0dd2\u0dc0\u0dd8\u0dad \u0dc3\u0d82\u0d9a\u0dbd\u0dca\u0db4 \u0dc3\u0dd0\u0dbd\u0dd0\u0dc3\u0dca\u0db8 1",
+    "desc": "Architectural Floor Plan Template. Original: 26 of Sveriges Historia frn ldsta tid till vra dagar etc 110.",
+    "desc_si": "\u0d86\u0d9a\u0dd8\u0dad\u0dd2\u0db8\u0dba \u0db1\u0dd2\u0dc0\u0dcf\u0dc3 \u0db6\u0dd2\u0db8\u0dca \u0dc3\u0dd0\u0dbd\u0dd0\u0dc3\u0dca\u0db8. \u0db8\u0dd4\u0dbd\u0dca \u0db4\u0dd2\u0da7\u0db4\u0dad: 26 of Sveriges Historia frn ldsta tid till vra dagar etc 110.",
+    "src": "house_plans/26_of__Sveriges_Historia_fr_n__ldsta_tid.jpg",
+    "isDefault": true
+  },
+  {
+    "id": "draw-house-9",
+    "title": "Minimalist Studio Layout 1",
+    "title_si": "\u0d9a\u0dd4\u0da9\u0dcf \u0dc3\u0dca\u0da7\u0dd6\u0da9\u0dd2\u0dba\u0ddd \u0dc3\u0dd0\u0dbd\u0dd0\u0dc3\u0dca\u0db8 1",
+    "desc": "Architectural Floor Plan Template. Original: 30BY35 home plan by ER AYUSH TOMAR 9997233546.",
+    "desc_si": "\u0d86\u0d9a\u0dd8\u0dad\u0dd2\u0db8\u0dba \u0db1\u0dd2\u0dc0\u0dcf\u0dc3 \u0db6\u0dd2\u0db8\u0dca \u0dc3\u0dd0\u0dbd\u0dd0\u0dc3\u0dca\u0db8. \u0db8\u0dd4\u0dbd\u0dca \u0db4\u0dd2\u0da7\u0db4\u0dad: 30BY35 home plan by ER AYUSH TOMAR 9997233546.",
+    "src": "house_plans/30BY35_home_plan_by_ER._AYUSH_TOMAR_9997.jpg",
+    "isDefault": true
+  },
+  {
+    "id": "draw-house-10",
+    "title": "Urban Duplex Blueprint 1",
+    "title_si": "\u0db1\u0dcf\u0d9c\u0dbb\u0dd2\u0d9a \u0da9\u0dd2\u0dba\u0dd4\u0db4\u0dca\u0dbd\u0dd9\u0d9a\u0dca\u0dc3\u0dca \u0dc3\u0dd0\u0dbd\u0dd0\u0dc3\u0dca\u0db8 1",
+    "desc": "Architectural Floor Plan Template. Original: 3d home drawings.",
+    "desc_si": "\u0d86\u0d9a\u0dd8\u0dad\u0dd2\u0db8\u0dba \u0db1\u0dd2\u0dc0\u0dcf\u0dc3 \u0db6\u0dd2\u0db8\u0dca \u0dc3\u0dd0\u0dbd\u0dd0\u0dc3\u0dca\u0db8. \u0db8\u0dd4\u0dbd\u0dca \u0db4\u0dd2\u0da7\u0db4\u0dad: 3d home drawings.",
+    "src": "house_plans/3d_home_drawings.jpg.jpg",
+    "isDefault": true
+  },
+  {
+    "id": "draw-house-11",
+    "title": "Modern 2-Bedroom Layout 2",
+    "title_si": "\u0db1\u0dd6\u0dad\u0db1 \u0d9a\u0dcf\u0db8\u0dbb 2\u0d9a \u0dc3\u0dd0\u0dbd\u0dd0\u0dc3\u0dca\u0db8 2",
+    "desc": "Architectural Floor Plan Template. Original: 476 of La Vie Amricaine Ouvrage illustr etc 11301498326.",
+    "desc_si": "\u0d86\u0d9a\u0dd8\u0dad\u0dd2\u0db8\u0dba \u0db1\u0dd2\u0dc0\u0dcf\u0dc3 \u0db6\u0dd2\u0db8\u0dca \u0dc3\u0dd0\u0dbd\u0dd0\u0dc3\u0dca\u0db8. \u0db8\u0dd4\u0dbd\u0dca \u0db4\u0dd2\u0da7\u0db4\u0dad: 476 of La Vie Amricaine Ouvrage illustr etc 11301498326.",
+    "src": "house_plans/476_of__La_Vie_Am_ricaine._Ouvrage_illus.jpg",
+    "isDefault": true
+  },
+  {
+    "id": "draw-house-12",
+    "title": "Traditional Floor Plan 2",
+    "title_si": "\u0dc3\u0dcf\u0db8\u0dca\u0db4\u0dca\u200d\u0dbb\u0daf\u0dcf\u0dba\u0dd2\u0d9a \u0db1\u0dd2\u0dc0\u0dcf\u0dc3 \u0dc3\u0dd0\u0dbd\u0dd0\u0dc3\u0dca\u0db8 2",
+    "desc": "Architectural Floor Plan Template. Original: 48 and 50 King Street Houses New York New York County NY HAB.",
+    "desc_si": "\u0d86\u0d9a\u0dd8\u0dad\u0dd2\u0db8\u0dba \u0db1\u0dd2\u0dc0\u0dcf\u0dc3 \u0db6\u0dd2\u0db8\u0dca \u0dc3\u0dd0\u0dbd\u0dd0\u0dc3\u0dca\u0db8. \u0db8\u0dd4\u0dbd\u0dca \u0db4\u0dd2\u0da7\u0db4\u0dad: 48 and 50 King Street Houses New York New York County NY HAB.",
+    "src": "house_plans/48_and_50_King_Street__Houses___New_York.png",
+    "isDefault": true
+  },
+  {
+    "id": "draw-house-13",
+    "title": "Compact Single Story Plan 2",
+    "title_si": "\u0d9a\u0dd4\u0da9\u0dcf \u0dad\u0db1\u0dd2 \u0db8\u0dc4\u0dbd\u0dca \u0dc3\u0dd0\u0dbd\u0dd0\u0dc3\u0dca\u0db8 2",
+    "desc": "Architectural Floor Plan Template. Original: 48 and 50 King Street Houses New York New York County NY HAB.",
+    "desc_si": "\u0d86\u0d9a\u0dd8\u0dad\u0dd2\u0db8\u0dba \u0db1\u0dd2\u0dc0\u0dcf\u0dc3 \u0db6\u0dd2\u0db8\u0dca \u0dc3\u0dd0\u0dbd\u0dd0\u0dc3\u0dca\u0db8. \u0db8\u0dd4\u0dbd\u0dca \u0db4\u0dd2\u0da7\u0db4\u0dad: 48 and 50 King Street Houses New York New York County NY HAB.",
+    "src": "house_plans/48_and_50_King_Street__Houses___New_York.png",
+    "isDefault": true
+  },
+  {
+    "id": "draw-house-14",
+    "title": "Double Story Villa Layout 2",
+    "title_si": "\u0daf\u0dd9\u0db8\u0dc4\u0dbd\u0dca \u0dc0\u0dd2\u0dbd\u0dcf \u0dc3\u0dd0\u0dbd\u0dd0\u0dc3\u0dca\u0db8 2",
+    "desc": "Architectural Floor Plan Template. Original: 48 and 50 King Street Houses New York New York County NY HAB.",
+    "desc_si": "\u0d86\u0d9a\u0dd8\u0dad\u0dd2\u0db8\u0dba \u0db1\u0dd2\u0dc0\u0dcf\u0dc3 \u0db6\u0dd2\u0db8\u0dca \u0dc3\u0dd0\u0dbd\u0dd0\u0dc3\u0dca\u0db8. \u0db8\u0dd4\u0dbd\u0dca \u0db4\u0dd2\u0da7\u0db4\u0dad: 48 and 50 King Street Houses New York New York County NY HAB.",
+    "src": "house_plans/48_and_50_King_Street__Houses___New_York.png",
+    "isDefault": true
+  },
+  {
+    "id": "draw-house-15",
+    "title": "Spacious 3-Bedroom House 2",
+    "title_si": "\u0dc0\u0dd2\u0dc1\u0dcf\u0dbd \u0d9a\u0dcf\u0db8\u0dbb 3\u0d9a \u0dc3\u0dd0\u0dbd\u0dd0\u0dc3\u0dca\u0db8 2",
+    "desc": "Architectural Floor Plan Template. Original: 4johan.",
+    "desc_si": "\u0d86\u0d9a\u0dd8\u0dad\u0dd2\u0db8\u0dba \u0db1\u0dd2\u0dc0\u0dcf\u0dc3 \u0db6\u0dd2\u0db8\u0dca \u0dc3\u0dd0\u0dbd\u0dd0\u0dc3\u0dca\u0db8. \u0db8\u0dd4\u0dbd\u0dca \u0db4\u0dd2\u0da7\u0db4\u0dad: 4johan.",
+    "src": "house_plans/4johan.jpg.jpg",
+    "isDefault": true
+  },
+  {
+    "id": "draw-house-16",
+    "title": "Eco-Friendly Concept Layout 2",
+    "title_si": "\u0db4\u0dbb\u0dd2\u0dc3\u0dbb \u0dc4\u0dd2\u0dad\u0d9a\u0dcf\u0db8\u0dd3 \u0dc3\u0d82\u0d9a\u0dbd\u0dca\u0db4 \u0dc3\u0dd0\u0dbd\u0dd0\u0dc3\u0dca\u0db8 2",
+    "desc": "Architectural Floor Plan Template. Original: 5 rue de la Tour-des-Dames Paris - coupe.",
+    "desc_si": "\u0d86\u0d9a\u0dd8\u0dad\u0dd2\u0db8\u0dba \u0db1\u0dd2\u0dc0\u0dcf\u0dc3 \u0db6\u0dd2\u0db8\u0dca \u0dc3\u0dd0\u0dbd\u0dd0\u0dc3\u0dca\u0db8. \u0db8\u0dd4\u0dbd\u0dca \u0db4\u0dd2\u0da7\u0db4\u0dad: 5 rue de la Tour-des-Dames Paris - coupe.",
+    "src": "house_plans/5_rue_de_la_Tour-des-Dames__Paris__-_cou.jpg",
+    "isDefault": true
+  },
+  {
+    "id": "draw-house-17",
+    "title": "Classic Cottage Layout 2",
+    "title_si": "\u0dc3\u0dcf\u0db8\u0dca\u0db4\u0dca\u200d\u0dbb\u0daf\u0dcf\u0dba\u0dd2\u0d9a \u0d9a\u0ddc\u0da7\u0dda\u0da2\u0dca \u0dc3\u0dd0\u0dbd\u0dd0\u0dc3\u0dca\u0db8 2",
+    "desc": "Architectural Floor Plan Template. Original: 5 rue de la Tour-des-Dames Paris - elevation.",
+    "desc_si": "\u0d86\u0d9a\u0dd8\u0dad\u0dd2\u0db8\u0dba \u0db1\u0dd2\u0dc0\u0dcf\u0dc3 \u0db6\u0dd2\u0db8\u0dca \u0dc3\u0dd0\u0dbd\u0dd0\u0dc3\u0dca\u0db8. \u0db8\u0dd4\u0dbd\u0dca \u0db4\u0dd2\u0da7\u0db4\u0dad: 5 rue de la Tour-des-Dames Paris - elevation.",
+    "src": "house_plans/5_rue_de_la_Tour-des-Dames__Paris__-_ele.jpg",
+    "isDefault": true
+  },
+  {
+    "id": "draw-house-18",
+    "title": "Open Concept Floor Plan 2",
+    "title_si": "\u0dc0\u0dd2\u0dc0\u0dd8\u0dad \u0dc3\u0d82\u0d9a\u0dbd\u0dca\u0db4 \u0dc3\u0dd0\u0dbd\u0dd0\u0dc3\u0dca\u0db8 2",
+    "desc": "Architectural Floor Plan Template. Original: 5 rue de la Tour-des-Dames Paris - plan.",
+    "desc_si": "\u0d86\u0d9a\u0dd8\u0dad\u0dd2\u0db8\u0dba \u0db1\u0dd2\u0dc0\u0dcf\u0dc3 \u0db6\u0dd2\u0db8\u0dca \u0dc3\u0dd0\u0dbd\u0dd0\u0dc3\u0dca\u0db8. \u0db8\u0dd4\u0dbd\u0dca \u0db4\u0dd2\u0da7\u0db4\u0dad: 5 rue de la Tour-des-Dames Paris - plan.",
+    "src": "house_plans/5_rue_de_la_Tour-des-Dames__Paris__-_pla.jpg",
+    "isDefault": true
+  },
+  {
+    "id": "draw-house-19",
+    "title": "Minimalist Studio Layout 2",
+    "title_si": "\u0d9a\u0dd4\u0da9\u0dcf \u0dc3\u0dca\u0da7\u0dd6\u0da9\u0dd2\u0dba\u0ddd \u0dc3\u0dd0\u0dbd\u0dd0\u0dc3\u0dca\u0db8 2",
+    "desc": "Architectural Floor Plan Template. Original: 54 Queen Street floor plans.",
+    "desc_si": "\u0d86\u0d9a\u0dd8\u0dad\u0dd2\u0db8\u0dba \u0db1\u0dd2\u0dc0\u0dcf\u0dc3 \u0db6\u0dd2\u0db8\u0dca \u0dc3\u0dd0\u0dbd\u0dd0\u0dc3\u0dca\u0db8. \u0db8\u0dd4\u0dbd\u0dca \u0db4\u0dd2\u0da7\u0db4\u0dad: 54 Queen Street floor plans.",
+    "src": "house_plans/54_Queen_Street_floor_plans.jpg.jpg",
+    "isDefault": true
+  },
+  {
+    "id": "draw-house-20",
+    "title": "Urban Duplex Blueprint 2",
+    "title_si": "\u0db1\u0dcf\u0d9c\u0dbb\u0dd2\u0d9a \u0da9\u0dd2\u0dba\u0dd4\u0db4\u0dca\u0dbd\u0dd9\u0d9a\u0dca\u0dc3\u0dca \u0dc3\u0dd0\u0dbd\u0dd0\u0dc3\u0dca\u0db8 2",
+    "desc": "Architectural Floor Plan Template. Original: 77 of Deutsche Volkskunde  Mit siebzehn Abbildungen und eine.",
+    "desc_si": "\u0d86\u0d9a\u0dd8\u0dad\u0dd2\u0db8\u0dba \u0db1\u0dd2\u0dc0\u0dcf\u0dc3 \u0db6\u0dd2\u0db8\u0dca \u0dc3\u0dd0\u0dbd\u0dd0\u0dc3\u0dca\u0db8. \u0db8\u0dd4\u0dbd\u0dca \u0db4\u0dd2\u0da7\u0db4\u0dad: 77 of Deutsche Volkskunde  Mit siebzehn Abbildungen und eine.",
+    "src": "house_plans/77_of__Deutsche_Volkskunde_..._Mit_siebz.jpg",
+    "isDefault": true
+  }
+]
